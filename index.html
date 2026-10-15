@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UniFind - Campus Lost &amp; Found Portal</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header / Navigation Bar -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="#" class="brand" aria-label="UniFind Home">
+        <div class="brand-icon">🎓</div>
+        <div>
+          <span class="brand-title">UniFind</span>
+          <span class="brand-subtitle">Campus Lost &amp; Found</span>
+        </div>
+      </a>
+
+      <!-- Primary Navigation Links -->
+      <nav class="main-nav" id="main-nav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li><a href="#browse-section" class="nav-link active" id="nav-browse-link">Browse Items</a></li>
+          <li><button type="button" class="nav-link-btn" id="nav-desks-btn">Campus Drop-Offs</button></li>
+          <li><button type="button" class="nav-link-btn" id="nav-guide-btn">How It Works</button></li>
+        </ul>
+      </nav>
+
+      <!-- Header Action Controls -->
+      <div class="header-actions">
+        <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark/Light Mode" title="Toggle Theme">
+          <span id="theme-icon">🌙</span>
+        </button>
+
+        <button id="auth-trigger-btn" class="btn btn-primary auth-trigger-btn" type="button">
+          Login / Sign Up
+        </button>
+
+        <div id="user-menu-wrap" class="user-menu-wrap hidden" aria-live="polite">
+          <button id="user-menu-button" class="user-menu-button" type="button" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">AS</span>
+            <span class="user-meta">
+              <strong id="user-name-display">Alicia Stone</strong>
+              <small id="user-level-display">Gold Level</small>
+            </span>
+            <span class="user-caret">▾</span>
+          </button>
+
+          <div id="user-dropdown" class="user-dropdown hidden">
+            <a href="#student-rewards-section">My Profile</a>
+            <a href="#browse-section">My Items</a>
+            <a href="#student-rewards-section">Claim History</a>
+            <button id="logout-btn" type="button">Logout</button>
+          </div>
+        </div>
+
+        <!-- Mobile Navigation Menu Toggle -->
+        <button id="mobile-menu-toggle" class="btn-icon mobile-only" aria-label="Toggle navigation menu" title="Menu">
+          <span id="mobile-menu-icon">☰</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Navigation -->
+    <div id="mobile-nav-drawer" class="mobile-nav-drawer" aria-hidden="true">
+      <div class="mobile-nav-content">
+        <a href="#browse-section" class="mobile-nav-link" id="mob-browse">🔍 Browse Items</a>
+        <button type="button" class="mobile-nav-link" id="mob-report-lost">🚨 Report a Lost Item</button>
+        <button type="button" class="mobile-nav-link" id="mob-report-found">📦 Report a Found Item</button>
+        <button type="button" class="mobile-nav-link" id="mob-desks">🏢 Campus Drop-Off Desks</button>
+        <button type="button" class="mobile-nav-link" id="mob-guide">💡 How Verification Works</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Campus Alert Banner -->
+  <aside class="campus-alert-banner">
+    <div class="banner-inner">
+      <span class="alert-tag">Campus Safety Notice</span>
+      <p>High-value belongings (Wallets, Phones, Laptops, IDs) are securely logged and held at <strong>Campus Security (Building B, Room 102)</strong>. Call 24/7: <strong>(555) 019-4400</strong></p>
+      <button class="banner-close-btn" id="dismiss-banner-btn" aria-label="Dismiss banner">✕</button>
+    </div>
+  </aside>
+
+  <!-- Hero & Quick-Action Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-pill-badge">🎓 Official Campus Community Portal</div>
+      <h1>Lost something on campus?<br><span>Let's help you get it back.</span></h1>
+      <p class="hero-desc">
+        Connect with fellow students, professors, and campus facilities to report misplaced belongings or turn in items found across university buildings, libraries, and dorms.
+      </p>
+
+      <!-- Quick Action CTA Buttons -->
+      <div class="hero-cta-group">
+        <button class="btn btn-lg btn-lost" id="hero-lost-btn">
+          <span>🔍</span> I Lost Something
+        </button>
+        <button class="btn btn-lg btn-found" id="hero-found-btn">
+          <span>📦</span> I Found Something
+        </button>
+        <a href="#browse-section" class="btn btn-lg btn-outline-hero">
+          <span>📋</span> Browse Directory
+        </a>
+      </div>
+
+      <!-- Live Statistics Counter Bar -->
+      <div class="stats-bar" role="region" aria-label="Live Campus Statistics">
+        <div class="stat-card">
+          <span class="stat-number" id="stat-total">0</span>
+          <span class="stat-label">Total Listings</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-card">
+          <span class="stat-number stat-lost" id="stat-lost">0</span>
+          <span class="stat-label">Items Lost</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-card">
+          <span class="stat-number stat-found" id="stat-found">0</span>
+          <span class="stat-label">Items Found</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-card">
+          <span class="stat-number stat-reunited" id="stat-reunited">0</span>
+          <span class="stat-label">Reunited 🎉</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="student-rewards-section" id="student-rewards-section">
+    <div class="rewards-shell">
+      <div class="rewards-header">
+        <div>
+          <span class="pill-badge">Student Kindness Points &amp; Scholarship</span>
+          <h2>Kindness that unlocks real campus opportunities</h2>
+        </div>
+        <span id="scholarship-status-badge" class="reward-status-badge">Guest Access</span>
+      </div>
+
+      <div class="reward-grid">
+        <div class="reward-card reward-card-primary">
+          <div class="reward-main">
+            <span class="reward-label">Verified Points</span>
+            <strong id="reward-points-total">0</strong>
+            <small id="reward-next-level-text">Next level: 100 / 500</small>
+          </div>
+          <span id="reward-level-badge" class="level-badge">Bronze</span>
+        </div>
+
+        <div class="reward-card">
+          <span class="reward-label">Successful Returns</span>
+          <strong id="reward-returns-total">0</strong>
+          <small>Verified return cases</small>
+        </div>
+
+        <div class="reward-card">
+          <span class="reward-label">Average Rating</span>
+          <strong id="reward-rating-total">0.0/5</strong>
+          <small>Owner satisfaction</small>
+        </div>
+
+        <div class="reward-card">
+          <span class="reward-label">Scholarship Status</span>
+          <strong id="reward-scholarship-state">Not Eligible</strong>
+          <small>Review pending after approval</small>
+        </div>
+      </div>
+
+      <div class="scholarship-progress-panel">
+        <div class="progress-header">
+          <div>
+            <strong>Scholarship Progress</strong>
+            <small id="scholarship-progress-text">0 / 500 points</small>
+          </div>
+          <span id="scholarship-state-pill" class="scholarship-state-pill">Not Eligible</span>
+        </div>
+
+        <div class="progress-bar" aria-label="Scholarship progress">
+          <span id="scholarship-progress-fill" class="progress-fill"></span>
+        </div>
+
+        <ul id="scholarship-checklist" class="scholarship-checklist">
+          <li>500 verified points in one academic year</li>
+          <li>10 verified successful returns</li>
+          <li>Activity in at least 4 different months</li>
+          <li>Average owner rating of 4/5 or higher</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Discovery / Filter & Directory Section -->
+  <main class="portal-main" id="browse-section">
+    <div class="section-title-wrapper">
+      <div>
+        <h2 class="section-heading">Campus Item Directory</h2>
+        <p class="section-subheading">Live feed of lost belongings and items awaiting collection across campus</p>
+      </div>
+      <div class="quick-view-pills">
+        <span class="pill-indicator active-dot"></span> Live Campus Feed
+        <span id="server-status-pill" class="server-status-pill" title="Backend Server Status">
+          <span class="status-dot"></span> <span id="server-status-text">Checking server...</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Search, Filter & Control Center -->
+    <div class="controls-card">
+      <!-- Search Input Box -->
+      <div class="search-box">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input 
+          type="text" 
+          id="search-input" 
+          placeholder="Search by keyword, item name, campus building, or description..." 
+          autocomplete="off"
+          aria-label="Search items"
+        />
+        <button id="clear-search-btn" class="clear-btn" title="Clear search text" style="display: none;">✕</button>
+      </div>
+
+      <!-- Filter Controls Row -->
+      <div class="filter-row">
+        <!-- Status Filter Tabs -->
+        <div class="status-tabs" role="tablist" aria-label="Filter items by status">
+          <button class="tab active" data-status="all" role="tab" aria-selected="true">All Items</button>
+          <button class="tab" data-status="lost" role="tab" aria-selected="false">🔍 Lost Items</button>
+          <button class="tab" data-status="found" role="tab" aria-selected="false">📦 Found Items</button>
+          <button class="tab" data-status="reunited" role="tab" aria-selected="false">🎉 Reunited</button>
+        </div>
+
+        <!-- Dropdowns: Category, Location & Sort -->
+        <div class="dropdowns-group">
+          <!-- Category Filter -->
+          <div class="dropdown-wrapper">
+            <label for="category-filter" class="filter-label">Category</label>
+            <select id="category-filter" class="select-input" aria-label="Filter by category">
+              <option value="all">All Categories</option>
+              <option value="Electronics">📱 Electronics &amp; Tech</option>
+              <option value="ID & Cards">🪪 ID Cards &amp; Wallets</option>
+              <option value="Keys">🔑 Keys &amp; Dorm Fobs</option>
+              <option value="Books & Study">📚 Books, Notes &amp; Bags</option>
+              <option value="Clothing">🧥 Clothing &amp; Accessories</option>
+              <option value="Personal Items">🎒 Water Bottles &amp; Personal</option>
+              <option value="Sports & Gear">⚽ Sports &amp; Gym Gear</option>
+            </select>
+          </div>
+
+          <!-- Campus Location Filter -->
+          <div class="dropdown-wrapper">
+            <label for="location-filter" class="filter-label">Campus Zone</label>
+            <select id="location-filter" class="select-input" aria-label="Filter by campus zone">
+              <option value="all">All Campus Locations</option>
+              <option value="Central Library">📚 Central Library</option>
+              <option value="Student Union">🍔 Student Union &amp; Food Court</option>
+              <option value="Engineering Hall">⚙️ Engineering Hall</option>
+              <option value="Science Complex">🔬 Science Complex</option>
+              <option value="Recreation Center">🏋️ Recreation &amp; Gym</option>
+              <option value="Dining Commons">🍽️ Dining Commons</option>
+              <option value="Dorms & Quad">🏢 Dorms &amp; Campus Quad</option>
+              <option value="Campus Transit">🚌 Campus Transit &amp; Shuttles</option>
+            </select>
+          </div>
+
+          <!-- Sort Selector -->
+          <div class="dropdown-wrapper">
+            <label for="sort-select" class="filter-label">Sort By</label>
+            <select id="sort-select" class="select-input" aria-label="Sort items">
+              <option value="newest">🕒 Newest First</option>
+              <option value="oldest">⏳ Oldest First</option>
+              <option value="name-asc">🔤 Title (A - Z)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Filters Feedback & Counter -->
+    <div class="results-header">
+      <div class="results-left">
+        <span id="results-count" class="results-count">Showing all items</span>
+        <div id="active-filter-chips" class="active-filter-chips"></div>
+      </div>
+      <button id="reset-filters-btn" class="reset-link" style="display: none;">
+        <span>↻</span> Reset all filters
+      </button>
+    </div>
+
+    <!-- Interactive Items Grid -->
+    <div id="items-grid" class="items-grid" role="region" aria-live="polite" aria-label="Lost and Found Item Cards">
+      <!-- Dynamically populated via script.js -->
+    </div>
+
+    <!-- Empty State Fallback -->
+    <div id="empty-state" class="empty-state" style="display: none;">
+      <div class="empty-icon">🔎</div>
+      <h3>No items match your active filters</h3>
+      <p>Try refining your search keyword, clearing filters, or file a report for this item to notify the campus community.</p>
+      <div class="empty-actions">
+        <button id="empty-reset-btn" class="btn btn-secondary">Clear Filters</button>
+        <button id="empty-report-btn" class="btn btn-primary">+ Post a New Report</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- How It Works Section -->
+  <section class="info-section" id="how-it-works-section">
+    <div class="info-container">
+      <div class="info-header">
+        <span class="pill-badge">Safe &amp; Simple Campus Process</span>
+        <h2>How the UniFind Portal Works</h2>
+        <p>Three straightforward steps designed to reconnect students and staff with misplaced property quickly and securely.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-badge">Step 1</div>
+          <div class="step-icon">📝</div>
+          <h3>Report the Item</h3>
+          <p>Submit a lost or found report with exact campus building, date, and distinguishing details.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-badge">Step 2</div>
+          <div class="step-icon">🔎</div>
+          <h3>Filter &amp; Connect</h3>
+          <p>Browse campus listings, filter by zone or category, and communicate directly with finders or desk staff.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-badge">Step 3</div>
+          <div class="step-icon">🤝</div>
+          <h3>Verify &amp; Reunited</h3>
+          <p>Verify ownership via security questions, collect at campus safe points, and mark the item reunited!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Campus Drop-Off Locations Section -->
+  <section class="locations-section" id="dropoffs-section">
+    <div class="locations-container">
+      <div class="locations-header">
+        <span class="pill-badge">Campus Safe Points</span>
+        <h2>Official Drop-off &amp; Pick-up Desks</h2>
+        <p>Found something valuable? Hand it in to any of these verified, staffed campus lost &amp; found collection desks.</p>
+      </div>
+
+      <div class="desks-grid">
+        <div class="desk-card">
+          <div class="desk-icon">🛡️</div>
+          <div class="desk-details">
+            <h3>Campus Safety Headquarters</h3>
+            <span class="desk-badge badge-always">24/7 Service</span>
+            <p class="desk-loc">📍 Security Building B, Suite 102</p>
+            <p class="desk-desc">Primary custody for state IDs, bank cards, wallets, phones, and laptops.</p>
+            <p class="desk-phone">📞 (555) 019-4400</p>
+          </div>
+        </div>
+
+        <div class="desk-card">
+          <div class="desk-icon">📚</div>
+          <div class="desk-details">
+            <h3>Central Library Helpdesk</h3>
+            <span class="desk-badge">Mon - Sun: 8 AM - 11 PM</span>
+            <p class="desk-loc">📍 Main Atrium, 1st Floor Desk</p>
+            <p class="desk-desc">Ideal for items found in quiet study halls, computer labs, and group rooms.</p>
+            <p class="desk-phone">📞 (555) 019-8230</p>
+          </div>
+        </div>
+
+        <div class="desk-card">
+          <div class="desk-icon">🍔</div>
+          <div class="desk-details">
+            <h3>Student Union Info Desk</h3>
+            <span class="desk-badge">Mon - Fri: 8 AM - 8 PM</span>
+            <p class="desk-loc">📍 Student Center, Lobby Level</p>
+            <p class="desk-desc">Accepts items found in dining areas, lounges, club spaces, and campus quad.</p>
+            <p class="desk-phone">📞 (555) 019-3310</p>
+          </div>
+        </div>
+
+        <div class="desk-card">
+          <div class="desk-icon">🏋️</div>
+          <div class="desk-details">
+            <h3>Recreation Center Desk</h3>
+            <span class="desk-badge">Mon - Sat: 6 AM - 10 PM</span>
+            <p class="desk-loc">📍 Main Gym Entrance Lobby</p>
+            <p class="desk-desc">Holds sports gear, water bottles, lockers items, gym clothes, and accessories.</p>
+            <p class="desk-phone">📞 (555) 019-5520</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Report Item Modal Dialog -->
+  <div id="report-modal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-labelledby="report-modal-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title" id="report-modal-title">Post a Campus Report</h2>
+          <p class="modal-subtitle" id="report-modal-subtitle">Help reunite campus belongings with their rightful owner.</p>
+        </div>
+        <button type="button" id="close-report-modal" class="btn-close" aria-label="Close modal" onclick="closeModal(reportModal)">✕</button>
+      </div>
+
+      <form id="report-form" class="modal-form">
+        <!-- Listing Type Radio Selector -->
+        <div class="form-group">
+          <label class="form-label">Report Type <span class="required">*</span></label>
+          <div class="type-selector">
+            <label class="radio-card">
+              <input type="radio" name="report-type" id="type-lost" value="lost" checked />
+              <div class="radio-content">
+                <span class="radio-icon">🔍</span>
+                <div>
+                  <strong>I Lost an Item</strong>
+                  <small>Looking for my misplaced belonging</small>
+                </div>
+              </div>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="report-type" id="type-found" value="found" />
+              <div class="radio-content">
+                <span class="radio-icon">📦</span>
+                <div>
+                  <strong>I Found an Item</strong>
+                  <small>Safe keeping or turned into a desk</small>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Item Name / Title -->
+        <div class="form-group">
+          <label for="item-title" class="form-label">
+            Item Name / Brief Summary <span class="required">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="item-title" 
+            class="form-input" 
+            placeholder="e.g., Apple AirPods Pro in black case, Student ID card" 
+            required 
+          />
+        </div>
+
+        <!-- Row: Category & Campus Location -->
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="item-category" class="form-label">Category <span class="required">*</span></label>
+            <select id="item-category" class="form-input" required>
+              <option value="" disabled selected>Select category</option>
+              <option value="Electronics">📱 Electronics &amp; Tech</option>
+              <option value="ID & Cards">🪪 ID Cards &amp; Wallets</option>
+              <option value="Keys">🔑 Keys &amp; Dorm Fobs</option>
+              <option value="Books & Study">📚 Books, Notes &amp; Bags</option>
+              <option value="Clothing">🧥 Clothing &amp; Accessories</option>
+              <option value="Personal Items">🎒 Water Bottles &amp; Personal</option>
+              <option value="Sports & Gear">⚽ Sports &amp; Gym Gear</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="item-location" class="form-label" id="label-location">
+              Campus Location Last Seen <span class="required">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="item-location" 
+              class="form-input" 
+              placeholder="e.g., Central Library 2nd Floor, Room 204" 
+              required 
+            />
+          </div>
+        </div>
+
+        <!-- Custody / Turned-in Field (dynamically shown/adjusted) -->
+        <div class="form-group" id="custody-group" style="display: none;">
+          <label for="item-custody" class="form-label">
+            Current Safe Custody / Storage Desk
+          </label>
+          <input 
+            type="text" 
+            id="item-custody" 
+            class="form-input" 
+            placeholder="e.g., Turned in to Central Library 1st Floor Desk, or Kept with me"
+          />
+        </div>
+
+        <!-- Row: Date & Reporter Role -->
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="item-date" class="form-label">Date Lost / Found <span class="required">*</span></label>
+            <input type="date" id="item-date" class="form-input" required />
+          </div>
+
+          <div class="form-group">
+            <label for="item-role" class="form-label">Your Role on Campus <span class="required">*</span></label>
+            <select id="item-role" class="form-input" required>
+              <option value="Student" selected>🎓 Student</option>
+              <option value="Faculty / Staff">👨‍🏫 Faculty / Professor</option>
+              <option value="Campus Security">🛡️ Campus Security</option>
+              <option value="Library Desk">📚 Library Helpdesk Staff</option>
+              <option value="Visitor">👥 Campus Visitor</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Contact Field -->
+        <div class="form-group">
+          <label for="item-contact" class="form-label">
+            Contact University Email or Phone <span class="required">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="item-contact" 
+            class="form-input" 
+            placeholder="e.g., student.name@university.edu or (555) 012-3456" 
+            required 
+          />
+          <small class="form-hint">Your email is only shared when legitimate claimants reach out via the portal.</small>
+        </div>
+
+        <!-- Description & Identifying Clues -->
+        <div class="form-group">
+          <label for="item-desc" class="form-label">
+            Detailed Description &amp; Distinguishing Marks
+          </label>
+          <textarea 
+            id="item-desc" 
+            class="form-input form-textarea" 
+            rows="3" 
+            placeholder="Include unique stickers, scratches, lock screen image, specific pocket contents, or verification hints..."
+          ></textarea>
+        </div>
+
+        <!-- Modal Actions -->
+        <div class="modal-footer">
+          <button type="button" id="cancel-report-btn" class="btn btn-outline">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="submit-report-btn">Publish Campus Report</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Claim / Contact Details Modal -->
+  <div id="claim-modal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-labelledby="claim-modal-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title" id="claim-modal-title">Item Details</h2>
+          <p class="modal-subtitle" id="claim-modal-subtitle">Campus verification and collection info</p>
+        </div>
+        <button type="button" id="close-claim-modal" class="btn-close" aria-label="Close modal" onclick="closeModal(claimModal)">✕</button>
+      </div>
+
+      <div class="claim-body" id="claim-modal-content">
+        <!-- Rendered dynamically via script.js -->
+      </div>
+
+      <div class="modal-footer" id="claim-modal-actions">
+        <!-- Rendered dynamically via script.js -->
+      </div>
+    </div>
+  </div>
+
+  <div id="auth-modal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-labelledby="auth-modal-title">
+    <div class="modal-card auth-modal-card">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title" id="auth-modal-title">Welcome Back</h2>
+          <p class="modal-subtitle">Sign in to report items, claim belongings, and earn kindness points.</p>
+        </div>
+        <button type="button" id="close-auth-modal" class="btn-close" aria-label="Close login modal" onclick="closeAuthModal()">✕</button>
+      </div>
+
+      <div class="auth-tabs" role="tablist" aria-label="Authentication tabs">
+        <button class="auth-tab active" type="button" data-auth-tab="login" aria-selected="true">Login</button>
+        <button class="auth-tab" type="button" data-auth-tab="signup" aria-selected="false">Sign Up</button>
+      </div>
+
+      <div id="auth-panel-login" class="auth-panel active">
+        <form id="login-form" class="modal-form auth-form">
+          <div class="form-group">
+            <label for="login-identifier" class="form-label">Email or Student ID</label>
+            <input id="login-identifier" class="form-input" type="text" placeholder="Email or Student ID" required />
+          </div>
+
+          <div class="form-group">
+            <label for="login-password" class="form-label">Password</label>
+            <input id="login-password" class="form-input" type="password" placeholder="Enter your password" required />
+            <div class="auth-inline-row">
+              <label class="remember-me"><input id="remember-me" type="checkbox" /> Remember me</label>
+              <button id="forgot-password-btn" class="text-link" type="button">Forgot password?</button>
+            </div>
+          </div>
+
+          <div id="login-error" class="inline-error" aria-live="polite"></div>
+
+          <button type="submit" class="btn btn-primary auth-submit-btn">Login</button>
+        </form>
+      </div>
+
+      <div id="auth-panel-signup" class="auth-panel">
+        <form id="signup-form" class="modal-form auth-form">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="signup-full-name" class="form-label">Full name</label>
+              <input id="signup-full-name" class="form-input" type="text" placeholder="Jane Doe" required />
+            </div>
+            <div class="form-group">
+              <label for="signup-student-id" class="form-label">Student ID / Roll Number</label>
+              <input id="signup-student-id" class="form-input" type="text" placeholder="20240123" required />
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+<label for="signup-email" class="form-label">Email Address</label>
+            <input id="signup-email" class="form-input" type="email" placeholder="you@example.com" required />
+            </div>
+            <div class="form-group">
+              <label for="signup-phone" class="form-label">Phone number</label>
+              <input id="signup-phone" class="form-input" type="tel" placeholder="+1 555 012 3456" required />
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="signup-department" class="form-label">Department / Program</label>
+              <input id="signup-department" class="form-input" type="text" placeholder="Computer Science" required />
+            </div>
+            <div class="form-group">
+              <label for="signup-year" class="form-label">Year of study</label>
+              <select id="signup-year" class="form-input" required>
+                <option value="">Select year</option>
+                <option>1st Year</option>
+                <option>2nd Year</option>
+                <option>3rd Year</option>
+                <option>4th Year</option>
+                <option>Masters</option>
+                <option>PhD</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="signup-password" class="form-label">Password</label>
+              <input id="signup-password" class="form-input" type="password" placeholder="Min 8 chars with letters and numbers" required />
+            </div>
+            <div class="form-group">
+              <label for="signup-confirm-password" class="form-label">Confirm password</label>
+              <input id="signup-confirm-password" class="form-input" type="password" placeholder="Repeat password" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="signup-photo" class="form-label">Profile photo (optional)</label>
+            <input id="signup-photo" class="form-input" type="file" accept="image/*" />
+          </div>
+
+          <div id="signup-error" class="inline-error" aria-live="polite"></div>
+
+          <div class="checkbox-stack">
+            <label class="check-row"><input id="signup-terms" type="checkbox" required /> I agree to the Terms and Privacy Policy</label>
+            <label class="check-row"><input id="signup-honesty" type="checkbox" required /> I will report items honestly and not make false claims</label>
+            <label class="check-row"><input id="signup-leaderboard" type="checkbox" /> Show me on the kindness leaderboard</label>
+          </div>
+
+          <button type="submit" class="btn btn-primary auth-submit-btn">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <div class="footer-col brand-col">
+          <div class="footer-brand">
+            <span class="footer-icon">🎓</span>
+            <span class="footer-title">UniFind Campus Portal</span>
+          </div>
+          <p class="footer-about">
+            The official central lost and found registry for students, faculty, and campus staff. Dedicated to reconnecting our college community with their essentials.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Campus Drop-Offs</h4>
+          <ul class="footer-links">
+            <li><a href="#dropoffs-section">Campus Safety (24/7)</a></li>
+            <li><a href="#dropoffs-section">Central Library Desk</a></li>
+            <li><a href="#dropoffs-section">Student Union Lobby</a></li>
+            <li><a href="#dropoffs-section">Rec Center Front Desk</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Portal Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#browse-section">Browse All Items</a></li>
+            <li><a href="#how-it-works-section">Verification Guide</a></li>
+            <li><a href="javascript:void(0)" onclick="openReportModal('lost')">Post Lost Item</a></li>
+            <li><a href="javascript:void(0)" onclick="openReportModal('found')">Post Found Item</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Emergency &amp; Security</h4>
+          <p class="footer-contact-item"><strong>Campus Police:</strong> (555) 019-4400</p>
+          <p class="footer-contact-item"><strong>Safety Office:</strong> safety@university.edu</p>
+          <p class="footer-contact-item"><strong>Hours:</strong> 24 Hours / 7 Days a week</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 UniFind University Lost &amp; Found Services. All rights reserved.</p>
+        <p class="footer-sub">Student Affairs &amp; Department of Campus Public Safety</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+</body>
+</html>

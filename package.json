@@ -1,0 +1,24 @@
+{
+  "name": "unifind-campus-portal",
+  "version": "1.0.0",
+  "description": "College Campus Lost and Found Portal with Supabase Backend and Interactive Frontend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "campus",
+    "lost-and-found",
+    "supabase",
+    "portal"
+  ],
+  "author": "UniFind Team",
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.8",
+    "express": "^5.3.0"
+  }
+}
